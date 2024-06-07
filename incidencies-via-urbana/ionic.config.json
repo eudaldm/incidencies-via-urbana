@@ -1,0 +1,7 @@
+{
+  "name": "incidencies-via-urbana",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
