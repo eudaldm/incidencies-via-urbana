@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { MarkersService } from '../services/markers/markers.service';
+import { Geolocation } from '@capacitor/geolocation';
+import { Marker } from '@capacitor/google-maps';
 
 @Component({
   selector: 'app-tab1',
@@ -7,6 +10,18 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  markers: Marker[] = [];
+
+  constructor(public markersService: MarkersService) {}
+
+  ionViewDidEnter() {
+    this.GetMarkers();
+  }
+
+  async GetMarkers(){
+    let coordinates = await Geolocation.getCurrentPosition();
+    this.markers = this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude)
+  }
+
 
 }

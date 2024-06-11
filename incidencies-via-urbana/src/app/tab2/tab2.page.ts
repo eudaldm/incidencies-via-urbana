@@ -1,39 +1,68 @@
 import { Component } from '@angular/core';
-import { GoogleMap } from '@capacitor/google-maps';
+import { GoogleMap, MapType } from '@capacitor/google-maps';
 import { environment } from 'src/environments/environment';
+import { Geolocation } from '@capacitor/geolocation';
+import { MarkersService } from '../services/markers/markers.service';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  styleUrls: ['tab2.page.scss'],
 })
 export class Tab2Page {
 
   newMap: GoogleMap | undefined;
   mapRef = document.getElementById('map');
 
-  constructor() {
+  constructor(public markersService: MarkersService) {}
 
+  ionViewDidEnter() {
+    if(this.newMap === undefined){
+      this.createMap();
+    }
   }
 
-  async ngOnInit() {
+  async createMap() {
+
+    let coordinates = await Geolocation.getCurrentPosition();
     this.mapRef = document.getElementById('map');
-    if(this.mapRef){
+
+    if (this.mapRef) {
       this.newMap = await GoogleMap.create({
         id: 'my-cool-map',
         element: this.mapRef,
         apiKey: environment.apiKey,
         config: {
           center: {
-            lat: 33.6,
-            lng: -117.9,
+            lat: coordinates.coords.latitude,
+            lng: coordinates.coords.longitude,
           },
-          zoom: 8,
+          zoom: 17,
         },
       });
+
+      this.newMap.enableTouch();
+      this.newMap.enableCurrentLocation(true);
+      this.newMap.enableAccessibilityElements(true);
+      this.newMap.enableIndoorMaps(true);
+      this.newMap.enableTrafficLayer(false);
+      
+      this.newMap.addMarkers(this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude));
     }
   }
-  
-}
 
+  async changeLayer() {
+
+    if(this.newMap){
+      
+      let mapType = await this.newMap.getMapType();
+
+      this.newMap.setMapType(
+        mapType === MapType.Normal ? 
+          MapType.Satellite : 
+          MapType.Normal
+      );
+    }
+  };
+}
 
