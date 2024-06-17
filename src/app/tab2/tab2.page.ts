@@ -31,7 +31,7 @@ export class Tab2Page {
       this.newMap = await GoogleMap.create({
         id: 'my-cool-map',
         element: this.mapRef,
-        apiKey: environment.apiKey,
+        apiKey: environment.firebase.apiKey,
         config: {
           center: {
             lat: coordinates.coords.latitude,
