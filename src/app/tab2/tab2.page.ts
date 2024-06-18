@@ -47,7 +47,7 @@ export class Tab2Page {
       this.newMap.enableIndoorMaps(true);
       this.newMap.enableTrafficLayer(false);
       
-      this.newMap.addMarkers(this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude));
+      this.newMap.addMarkers(await this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude));
     }
   }
 
