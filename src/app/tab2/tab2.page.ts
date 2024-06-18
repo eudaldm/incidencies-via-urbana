@@ -31,7 +31,7 @@ export class Tab2Page {
       this.newMap = await GoogleMap.create({
         id: 'my-cool-map',
         element: this.mapRef,
-        apiKey: environment.apiKey,
+        apiKey: environment.firebase.apiKey,
         config: {
           center: {
             lat: coordinates.coords.latitude,
@@ -47,7 +47,7 @@ export class Tab2Page {
       this.newMap.enableIndoorMaps(true);
       this.newMap.enableTrafficLayer(false);
       
-      this.newMap.addMarkers(this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude));
+      this.newMap.addMarkers(await this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude));
     }
   }
 

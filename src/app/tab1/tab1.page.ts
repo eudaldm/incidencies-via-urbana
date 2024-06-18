@@ -20,7 +20,7 @@ export class Tab1Page {
 
   async GetMarkers(){
     let coordinates = await Geolocation.getCurrentPosition();
-    this.markers = this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude)
+    this.markers = await this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude)
   }
 
 
