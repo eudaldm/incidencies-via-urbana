@@ -48,8 +48,21 @@ export class Tab2Page {
       this.newMap.enableTouch();
       this.newMap.enableCurrentLocation(true);
       this.newMap.enableAccessibilityElements(true);
-      this.newMap.enableIndoorMaps(true);
+      this.newMap.enableIndoorMaps(false);
       this.newMap.enableTrafficLayer(false);
+
+      this.newMap.setOnMarkerClickListener(async (marker) => {
+        this.newMap?.setCamera(
+          {
+            coordinate: {
+              lat: marker.latitude,
+              lng: marker.longitude
+            },
+            animate: true,
+            animationDuration: 500
+          });
+        console.log(marker);
+      });
       
       this.newMap.addMarkers(await this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude));
     }
