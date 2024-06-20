@@ -2,7 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { GoogleMap, MapType } from '@capacitor/google-maps';
 import { environment } from 'src/environments/environment';
 import { Geolocation } from '@capacitor/geolocation';
-import { MarkersService } from '../services/markers/markers.service';
+import { MarkersService } from '../../services/markers/markers.service';
 import { IonicModule } from '@ionic/angular';
 
 @Component({

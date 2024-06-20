@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ExploreContainerComponent } from '../explore-container/explore-container.component';
+import { ExploreContainerComponent } from '../../explore-container/explore-container.component';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
