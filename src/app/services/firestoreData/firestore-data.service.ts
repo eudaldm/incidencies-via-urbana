@@ -37,13 +37,16 @@ export class FirestoreDataService {
     return addDoc(collectionRef, objectToAdd);
   }
 
-  //Not tested
   delete<type>(objectToDelete: type & {id?: string}) {
     const docRef = doc(this.firestore, this.collectionName +`/${objectToDelete.id}`);
     return deleteDoc(docRef);
   }
 
-//Not tested
+  deleteById<type>(documentId: string) {
+    const docRef = doc(this.firestore, this.collectionName +`/${documentId}`);
+    return deleteDoc(docRef);
+  }
+
   update<type>(objectToUpdate: type & {id?: string}, fieldsToUpdate: any) {
     const docRef = doc(this.firestore, this.collectionName + `/${objectToUpdate.id}`);
     return updateDoc(docRef, fieldsToUpdate);
