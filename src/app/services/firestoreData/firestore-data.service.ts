@@ -47,9 +47,15 @@ export class FirestoreDataService {
     return deleteDoc(docRef);
   }
 
+  // fieldsToUpdate must be something like { title: objectToUpdate.title, text: objectToUpdate.text }
   update<type>(objectToUpdate: type & {id?: string}, fieldsToUpdate: any) {
     const docRef = doc(this.firestore, this.collectionName + `/${objectToUpdate.id}`);
     return updateDoc(docRef, fieldsToUpdate);
-    //return updateDoc(docRef, { title: objectToUpdate.title, text: objectToUpdate.text });
+  }
+  
+  // fieldsToUpdate must be something like { title: objectToUpdate.title, text: objectToUpdate.text }
+  updateById<type>(documentId: string, fieldsToUpdate: any) {
+    const docRef = doc(this.firestore, this.collectionName + `/${documentId}`);
+    return updateDoc(docRef, fieldsToUpdate);
   }
 }

@@ -48,4 +48,14 @@ export class MarkersDataService extends FirestoreDataService {
     this.deleteById<IMarker>(markerId);
   }
 
+    // fieldsToUpdate must be something like { title: objectToUpdate.title, text: objectToUpdate.text }
+  updateMarker(marker: IMarker, fieldsToUpdate: any){
+    this.update<IMarker>(marker, fieldsToUpdate);
+  }
+
+    // fieldsToUpdate must be something like { title: objectToUpdate.title, text: objectToUpdate.text }
+  updateMarkerById(markerId: string, fieldsToUpdate: any){
+    this.updateById<IMarker>(markerId, fieldsToUpdate);
+  }
+
 }
