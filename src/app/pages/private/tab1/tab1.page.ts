@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MarkersService } from '../services/markers/markers.service';
+import { MarkersService } from '../../../services/markers/markers.service';
 import { Geolocation } from '@capacitor/geolocation';
 import { Marker } from '@capacitor/google-maps';
 import { NgFor } from '@angular/common';
