@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { GoogleMap, MapType } from '@capacitor/google-maps';
 import { environment } from 'src/environments/environment';
 import { Geolocation } from '@capacitor/geolocation';
 import { MarkersService } from '../services/markers/markers.service';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss'],
+    selector: 'app-tab2',
+    templateUrl: 'tab2.page.html',
+    styleUrls: ['tab2.page.scss'],
+    standalone: true,
+    imports: [IonicModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab2Page {
 
