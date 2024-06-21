@@ -14,15 +14,15 @@
   @if (credentials !== undefined) {
     <form (ngSubmit)="login()" [formGroup]="credentials">
       <ion-item fill="solid" class="ion-margin-bottom">
-        <input type="email" placeholder="Email" formControlName="email"/>
+        <input type="email" placeholder="Correu-e" formControlName="email"/>
       </ion-item>
       <ion-item fill="solid" class="ion-margin-bottom">
-        <input type="password" placeholder="Password" formControlName="password"/>
+        <input type="password" placeholder="Contrassenya" formControlName="password"/>
       </ion-item>
   
-      <ion-button type="submit" expand="block">Log in</ion-button>
+      <ion-button type="submit" expand="block">Accedir</ion-button>
       <ion-button type="button" expand="block" color="secondary" (click)="register()"
-        >Create account</ion-button
+        >Crear compte</ion-button
       >
     </form>
   }
