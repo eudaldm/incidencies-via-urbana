@@ -3,25 +3,27 @@ import { GoogleMap, MapType } from '@capacitor/google-maps';
 import { environment } from 'src/environments/environment';
 import { Geolocation } from '@capacitor/geolocation';
 import { MarkersService } from '../../services/markers/markers.service';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
+import { MarkerModalComponent } from '../../components/marker-modal/marker-modal.component';
+import { MarkerClickCallbackData } from '@capacitor/google-maps/dist/typings/definitions';
 
 @Component({
-    selector: 'app-tab2',
-    templateUrl: 'tab2.page.html',
-    styleUrls: ['tab2.page.scss'],
-    standalone: true,
-    imports: [IonicModule],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  selector: 'app-tab2',
+  templateUrl: 'tab2.page.html',
+  styleUrls: ['tab2.page.scss'],
+  standalone: true,
+  imports: [IonicModule, MarkerModalComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab2Page {
 
   newMap: GoogleMap | undefined;
   mapRef = document.getElementById('map');
 
-  constructor(public markersService: MarkersService) {}
+  constructor(private markersService: MarkersService, private modalCtrl: ModalController) { }
 
   ionViewDidEnter() {
-    if(this.newMap === undefined){
+    if (this.newMap === undefined) {
       this.createMap();
     }
   }
@@ -53,33 +55,50 @@ export class Tab2Page {
 
       this.newMap.setOnMarkerClickListener(async (marker) => {
         this.newMap?.setCamera(
-          {
-            coordinate: {
-              lat: marker.latitude,
-              lng: marker.longitude
-            },
-            animate: true,
-            animationDuration: 500
-          });
+        {
+          coordinate: {
+            lat: marker.latitude,
+            lng: marker.longitude
+          },
+          animate: true,
+          animationDuration: 500
+        });
+        this.openModal(marker);
         console.log(marker);
       });
-      
+
       this.newMap.addMarkers(await this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude));
     }
   }
 
   async changeLayer() {
 
-    if(this.newMap){
-      
+    if (this.newMap) {
+
       let mapType = await this.newMap.getMapType();
 
       this.newMap.setMapType(
-        mapType === MapType.Normal ? 
-          MapType.Satellite : 
+        mapType === MapType.Normal ?
+          MapType.Satellite :
           MapType.Normal
       );
     }
   };
+
+  async openModal(marker: MarkerClickCallbackData) {
+
+    const modal = await this.modalCtrl.create({
+      component: MarkerModalComponent,
+      componentProps: { title: marker.title },
+    });
+
+    modal.present();
+
+    // const { data, role } = await modal.onWillDismiss();
+
+    // if (role === 'confirm') {
+    //   this.message = `Hello, ${data}!`;
+    // }
+  }
 }
 
