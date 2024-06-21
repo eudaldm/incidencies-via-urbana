@@ -3,14 +3,16 @@ import { GoogleMap, MapType } from '@capacitor/google-maps';
 import { environment } from 'src/environments/environment';
 import { Geolocation } from '@capacitor/geolocation';
 import { MarkersService } from '../../../services/markers/markers.service';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
+import { MarkerModalComponent } from '../../../components/marker-modal/marker-modal.component';
+import { MarkerClickCallbackData } from '@capacitor/google-maps/dist/typings/definitions';
 
 @Component({
     selector: 'app-tab2',
     templateUrl: 'tab2.page.html',
     styleUrls: ['tab2.page.scss'],
     standalone: true,
-    imports: [IonicModule],
+    imports: [IonicModule, MarkerModalComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab2Page {
@@ -18,7 +20,7 @@ export class Tab2Page {
   newMap: GoogleMap | undefined;
   mapRef = document.getElementById('map');
 
-  constructor(public markersService: MarkersService) {}
+  constructor(public markersService: MarkersService, private modalCtrl: ModalController) { }
 
   ionViewDidEnter() {
     if(this.newMap === undefined){
@@ -50,7 +52,21 @@ export class Tab2Page {
       this.newMap.enableAccessibilityElements(true);
       this.newMap.enableIndoorMaps(true);
       this.newMap.enableTrafficLayer(false);
-      
+
+      this.newMap.setOnMarkerClickListener(async (marker) => {
+        this.newMap?.setCamera(
+        {
+          coordinate: {
+            lat: marker.latitude,
+            lng: marker.longitude
+          },
+          animate: true,
+          animationDuration: 500
+        });
+
+        this.openModal(marker);
+      });
+
       this.newMap.addMarkers(await this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude));
     }
   }
@@ -68,5 +84,21 @@ export class Tab2Page {
       );
     }
   };
+
+  async openModal(marker: MarkerClickCallbackData) {
+
+    const modal = await this.modalCtrl.create({
+      component: MarkerModalComponent,
+      componentProps: { title: marker.title },
+    });
+
+    modal.present();
+
+    // const { data, role } = await modal.onWillDismiss();
+
+    // if (role === 'confirm') {
+    //   this.message = `Hello, ${data}!`;
+    // }
+  }
 }
 
