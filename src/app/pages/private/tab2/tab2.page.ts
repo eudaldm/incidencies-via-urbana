@@ -53,6 +53,7 @@ export class Tab2Page {
             lng: coordinates.coords.longitude,
           },
           zoom: 17,
+          fullscreenControl: false
         },
       });
 
@@ -74,6 +75,7 @@ export class Tab2Page {
         });
 
         this.openModal(marker);
+        console.log(marker);
       });
 
       this.newMap.addMarkers(await this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude));
