@@ -3,16 +3,17 @@ import { GoogleMap, MapType } from '@capacitor/google-maps';
 import { environment } from 'src/environments/environment';
 import { Geolocation } from '@capacitor/geolocation';
 import { MarkersService } from '../../../services/markers/markers.service';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonicModule, ModalController, Platform } from '@ionic/angular';
 import { MarkerModalComponent } from '../../../components/marker-modal/marker-modal.component';
 import { MarkerClickCallbackData } from '@capacitor/google-maps/dist/typings/definitions';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-tab2',
     templateUrl: 'tab2.page.html',
     styleUrls: ['tab2.page.scss'],
     standalone: true,
-    imports: [IonicModule, MarkerModalComponent],
+    imports: [IonicModule, MarkerModalComponent, NgIf],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab2Page {
@@ -20,7 +21,15 @@ export class Tab2Page {
   newMap: GoogleMap | undefined;
   mapRef = document.getElementById('map');
 
-  constructor(public markersService: MarkersService, private modalCtrl: ModalController) { }
+  isMobile: boolean;
+
+  constructor(
+    public markersService: MarkersService, 
+    public platform: Platform,
+    private modalCtrl: ModalController) {
+      
+    this.isMobile = this.platform.is('mobile');
+    }
 
   ionViewDidEnter() {
     if(this.newMap === undefined){
