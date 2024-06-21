@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Identificació</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Identificació</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  @if (credentials !== undefined) {
+    <form (ngSubmit)="login()" [formGroup]="credentials">
+      <ion-item fill="solid" class="ion-margin-bottom">
+        <input type="email" placeholder="Correu-e" formControlName="email"/>
+      </ion-item>
+      <ion-item fill="solid" class="ion-margin-bottom">
+        <input type="password" placeholder="Contrassenya" formControlName="password"/>
+      </ion-item>
+  
+      <ion-button type="submit" expand="block">Accedir</ion-button>
+      <ion-button type="button" expand="block" color="secondary" (click)="register()"
+        >Crear compte</ion-button
+      >
+    </form>
+  }
+
+</ion-content>
