@@ -12,19 +12,21 @@
   </ion-header>
 
   @if (credentials !== undefined) {
-    <form (ngSubmit)="login()" [formGroup]="credentials">
-      <ion-item fill="solid" class="ion-margin-bottom">
-        <input type="email" placeholder="Correu-e" formControlName="email"/>
-      </ion-item>
-      <ion-item fill="solid" class="ion-margin-bottom">
-        <input type="password" placeholder="Contrassenya" formControlName="password"/>
-      </ion-item>
-  
-      <ion-button type="submit" expand="block">Accedir</ion-button>
-      <ion-button type="button" expand="block" color="secondary" (click)="register()"
-        >Crear compte</ion-button
-      >
-    </form>
+    <div class="form">
+      <form (ngSubmit)="login()" [formGroup]="credentials">
+        <ion-card>
+          <ion-item class="email">
+            <ion-input fill="solid" type="email" [clearInput]="true" placeholder="Correu-e" formControlName="email"></ion-input>
+          </ion-item>
+          <ion-item class="password">
+            <ion-input fill="solid" type="password" [clearInput]="true" placeholder="Contrassenya" formControlName="password"></ion-input>
+          </ion-item>
+        </ion-card>
+        <div class="buttons">
+          <ion-button type="submit" expand="block">Accedir</ion-button>
+          <ion-button type="button" expand="block" color="secondary" (click)="register()">Crear compte</ion-button>
+        </div>
+      </form>
+    </div>
   }
-
 </ion-content>
