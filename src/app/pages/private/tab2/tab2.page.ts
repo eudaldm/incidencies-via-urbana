@@ -5,8 +5,10 @@ import { Geolocation } from '@capacitor/geolocation';
 import { MarkersService } from '../../../services/markers/markers.service';
 import { IonicModule, ModalController, Platform } from '@ionic/angular';
 import { MarkerModalComponent } from '../../../components/marker-modal/marker-modal.component';
-import { MarkerClickCallbackData } from '@capacitor/google-maps/dist/typings/definitions';
 import { NgIf } from '@angular/common';
+import { MarkerClickCallbackData } from '@capacitor/google-maps/dist/typings/definitions';
+import { addIcons } from 'ionicons';
+import { layersOutline } from 'ionicons/icons';
 
 @Component({
     selector: 'app-tab2',
@@ -18,7 +20,7 @@ import { NgIf } from '@angular/common';
 })
 export class Tab2Page {
 
-  newMap: GoogleMap | undefined;
+  map: GoogleMap | undefined;
   mapRef = document.getElementById('map');
 
   isMobile: boolean;
@@ -27,12 +29,16 @@ export class Tab2Page {
     public markersService: MarkersService, 
     public platform: Platform,
     private modalCtrl: ModalController) {
-      
-    this.isMobile = this.platform.is('mobile');
+
+      addIcons({
+        layersOutline
+      });
+
+      this.isMobile = this.platform.is('mobile');
     }
 
   ionViewDidEnter() {
-    if(this.newMap === undefined){
+    if(this.map === undefined){
       this.createMap();
     }
   }
@@ -43,8 +49,8 @@ export class Tab2Page {
     this.mapRef = document.getElementById('map');
 
     if (this.mapRef) {
-      this.newMap = await GoogleMap.create({
-        id: 'my-cool-map',
+      this.map = await GoogleMap.create({
+        id: 'map',
         element: this.mapRef,
         apiKey: environment.firebase.apiKey,
         config: {
@@ -57,14 +63,12 @@ export class Tab2Page {
         },
       });
 
-      this.newMap.enableTouch();
-      this.newMap.enableCurrentLocation(true);
-      this.newMap.enableAccessibilityElements(true);
-      this.newMap.enableIndoorMaps(true);
-      this.newMap.enableTrafficLayer(false);
+      this.map.enableTouch();
+      this.map.enableCurrentLocation(true);
+      this.map.enableTrafficLayer(false);
 
-      this.newMap.setOnMarkerClickListener(async (marker) => {
-        this.newMap?.setCamera(
+      this.map.setOnMarkerClickListener(async (marker) => {
+        this.map?.setCamera(
         {
           coordinate: {
             lat: marker.latitude,
@@ -78,17 +82,18 @@ export class Tab2Page {
         console.log(marker);
       });
 
-      this.newMap.addMarkers(await this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude));
+      const markers = await this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude);
+      this.map.addMarkers(markers);
     }
   }
 
   async changeLayer() {
 
-    if(this.newMap){
+    if(this.map){
       
-      let mapType = await this.newMap.getMapType();
+      let mapType = await this.map.getMapType();
 
-      this.newMap.setMapType(
+      this.map.setMapType(
         mapType === MapType.Normal ? 
           MapType.Satellite : 
           MapType.Normal
@@ -100,16 +105,20 @@ export class Tab2Page {
 
     const modal = await this.modalCtrl.create({
       component: MarkerModalComponent,
-      componentProps: { title: marker.title },
+      cssClass: "modal",
+      componentProps: { marker },
     });
 
     modal.present();
 
-    // const { data, role } = await modal.onWillDismiss();
+    const { data, role } = await modal.onWillDismiss();
 
-    // if (role === 'confirm') {
-    //   this.message = `Hello, ${data}!`;
-    // }
+    if (role === 'confirm') {
+      console.log('con')
+    }
+    else {
+      console.log('exit')
+    }
   }
 }
 

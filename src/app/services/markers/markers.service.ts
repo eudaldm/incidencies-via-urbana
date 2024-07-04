@@ -12,17 +12,20 @@ export class MarkersService {
 
   constructor(private markersDataService: MarkersDataService) { }
 
-  getNearMarkers(latitude: number, longitude: number): Promise<Marker[]> {
+  getNearMarkers(latitude: number, longitude: number): Promise<IMarker[]> {
     return this.markersDataService.getNearMarkers(latitude, longitude);
+    //return this.getMockedMarkers(latitude, longitude);
   }
 
-  private getMockedMarkers(latitude: number, longitude: number) : IMarker[]
+  private async getMockedMarkers(latitude: number, longitude: number) : Promise<IMarker[]>
   {
     let markers: IMarker[] = [];
 
     for (let i = 0; i < 7; i++) {
        markers.push({
+        id: ''+i,
         userId: 'userTest',
+        photoURL: 'photo',
         title: 'marker ' + i,
         snippet: 'snippet ' + i,
           coordinate: {
