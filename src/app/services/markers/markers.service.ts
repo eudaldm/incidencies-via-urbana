@@ -25,9 +25,9 @@ export class MarkersService {
        markers.push({
         id: ''+i,
         userId: 'userTest',
-        photoURL: 'photo',
+        photoURL: 'https://s2.ppllstatics.com/elcomercio/www/multimedia/202301/21/media/cortadas/80120341--1248x968.jpg',
         title: 'marker ' + i,
-        snippet: 'snippet ' + i,
+        snippet: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen boo baallon. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500 when an unknown printer took a galley of type and scrambled it to make a type specimen boo baallon.',
           coordinate: {
             lat: Math.random() * ((latitude + this.latLngDif) -  (latitude - this.latLngDif)) + (latitude - this.latLngDif),
             lng: Math.random() * ((longitude + this.latLngDif) -  (longitude - this.latLngDif)) + (longitude - this.latLngDif),

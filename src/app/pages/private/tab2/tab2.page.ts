@@ -10,14 +10,15 @@ import { MarkerClickCallbackData } from '@capacitor/google-maps/dist/typings/def
 import { addIcons } from 'ionicons';
 import { layersOutline } from 'ionicons/icons';
 import { } from '@ionic/angular';
+import { IMarker } from '../../../models/IMarker';
 
 @Component({
-    selector: 'app-tab2',
-    templateUrl: 'tab2.page.html',
-    styleUrls: ['tab2.page.scss'],
-    standalone: true,
-    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, MarkerModalComponent, NgIf],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  selector: 'app-tab2',
+  templateUrl: 'tab2.page.html',
+  styleUrls: ['tab2.page.scss'],
+  standalone: true,
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, MarkerModalComponent, NgIf],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab2Page {
 
@@ -26,20 +27,22 @@ export class Tab2Page {
 
   isMobile: boolean;
 
+  nearMarkers: IMarker[] = [];
+
   constructor(
-    public markersService: MarkersService, 
+    public markersService: MarkersService,
     public platform: Platform,
     private modalCtrl: ModalController) {
 
-      addIcons({
-        layersOutline
-      });
+    addIcons({
+      layersOutline
+    });
 
-      this.isMobile = this.platform.is('mobile');
-    }
+    this.isMobile = this.platform.is('mobile');
+  }
 
   ionViewDidEnter() {
-    if(this.map === undefined){
+    if (this.map === undefined) {
       this.createMap();
     }
   }
@@ -68,41 +71,44 @@ export class Tab2Page {
       this.map.enableCurrentLocation(true);
       this.map.enableTrafficLayer(false);
 
-      this.map.setOnMarkerClickListener(async (marker) => {
+      this.map.setOnMarkerClickListener(async (markerClickData) => {
         this.map?.setCamera(
         {
           coordinate: {
-            lat: marker.latitude,
-            lng: marker.longitude
+            lat: markerClickData.latitude,
+            lng: markerClickData.longitude
           },
           animate: true,
           animationDuration: 500
         });
-
-        this.openModal(marker);
-        console.log(marker);
+        
+        this.openModal(markerClickData);
       });
 
-      const markers = await this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude);
-      this.map.addMarkers(markers);
+      this.nearMarkers = await this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude);
+      this.map.addMarkers(this.nearMarkers);
     }
   }
 
   async changeLayer() {
+    if (this.map) {
 
-    if(this.map){
-      
       let mapType = await this.map.getMapType();
 
       this.map.setMapType(
-        mapType === MapType.Normal ? 
-          MapType.Satellite : 
+        mapType === MapType.Normal ?
+          MapType.Satellite :
           MapType.Normal
       );
     }
   };
 
-  async openModal(marker: MarkerClickCallbackData) {
+  async openModal(markerClickData: MarkerClickCallbackData) {
+
+    let marker = this.nearMarkers.find(x => 
+      x.coordinate.lat === markerClickData.latitude &&
+      x.coordinate.lng === markerClickData.longitude &&
+      x.title === markerClickData.title);
 
     const modal = await this.modalCtrl.create({
       component: MarkerModalComponent,
