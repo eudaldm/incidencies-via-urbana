@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonIcon, IonTabBar, IonTabButton, IonTabs } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {menuOutline, locationOutline, personOutline, layersOutline} from 'ionicons/icons';
 
@@ -8,7 +8,7 @@ import {menuOutline, locationOutline, personOutline, layersOutline} from 'ionico
     templateUrl: 'tabs.page.html',
     styleUrls: ['tabs.page.scss'],
     standalone: true,
-    imports: [IonicModule]
+    imports: [IonTabs, IonTabBar, IonTabButton, IonIcon]
 })
 export class TabsPage {
 

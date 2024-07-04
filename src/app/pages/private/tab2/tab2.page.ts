@@ -3,19 +3,20 @@ import { GoogleMap, MapType } from '@capacitor/google-maps';
 import { environment } from 'src/environments/environment';
 import { Geolocation } from '@capacitor/geolocation';
 import { MarkersService } from '../../../services/markers/markers.service';
-import { IonicModule, ModalController, Platform } from '@ionic/angular';
+import { ModalController, Platform, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { MarkerModalComponent } from '../../../components/marker-modal/marker-modal.component';
 import { NgIf } from '@angular/common';
 import { MarkerClickCallbackData } from '@capacitor/google-maps/dist/typings/definitions';
 import { addIcons } from 'ionicons';
 import { layersOutline } from 'ionicons/icons';
+import { } from '@ionic/angular';
 
 @Component({
     selector: 'app-tab2',
     templateUrl: 'tab2.page.html',
     styleUrls: ['tab2.page.scss'],
     standalone: true,
-    imports: [IonicModule, MarkerModalComponent, NgIf],
+    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, MarkerModalComponent, NgIf],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab2Page {
