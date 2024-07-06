@@ -54,8 +54,12 @@ ion-toast.custom-toast {
     font-size: 15px;
   }
 
-ion-modal.modal::part(content) {    
+
+
+@media only screen and (min-width: 768px) {
+  ion-modal.modal::part(content) {    
     --height: 70%;
     --width: 60%;
     display: inline-block;
+}
 }
