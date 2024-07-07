@@ -12,18 +12,20 @@
         margin-bottom: 5px;
     }
 }
-  
-ion-avatar {
-    --border-radius: 4px;
-    height: fit-content;
-    width: fit-content;
-    min-height: 20%;
-    min-width: 20%;
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+
+@media only screen and (max-width: 768px) {
+    ion-avatar {
+        --border-radius: 4px;
+        height: fit-content;
+        width: fit-content;
+        min-height: 20%;
+        min-width: 20%;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 }
 
 
