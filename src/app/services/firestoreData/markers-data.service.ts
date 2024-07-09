@@ -37,9 +37,25 @@ export class MarkersDataService extends FirestoreDataService {
       where("coordinate.lng", ">=", longitude - this.latLngDif)
     ));
 
-    console.log(latitude, longitude)
-
     return this.getByQuery<IMarker>(filter);
+  }
+
+  deleteMarker(marker: IMarker){
+    this.delete<IMarker>(marker);
+  }
+
+  deleteMarkerById(markerId: string){
+    this.deleteById<IMarker>(markerId);
+  }
+
+    // fieldsToUpdate must be something like { title: objectToUpdate.title, text: objectToUpdate.text }
+  updateMarker(marker: IMarker, fieldsToUpdate: any){
+    this.update<IMarker>(marker, fieldsToUpdate);
+  }
+
+    // fieldsToUpdate must be something like { title: objectToUpdate.title, text: objectToUpdate.text }
+  updateMarkerById(markerId: string, fieldsToUpdate: any){
+    this.updateById<IMarker>(markerId, fieldsToUpdate);
   }
 
 }

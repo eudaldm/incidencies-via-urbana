@@ -3,25 +3,46 @@ import { GoogleMap, MapType } from '@capacitor/google-maps';
 import { environment } from 'src/environments/environment';
 import { Geolocation } from '@capacitor/geolocation';
 import { MarkersService } from '../../../services/markers/markers.service';
-import { IonicModule } from '@ionic/angular';
+import { ModalController, Platform, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { MarkerModalComponent } from '../../../components/marker-modal/marker-modal.component';
+import { NgIf } from '@angular/common';
+import { MarkerClickCallbackData } from '@capacitor/google-maps/dist/typings/definitions';
+import { addIcons } from 'ionicons';
+import { layersOutline } from 'ionicons/icons';
+import { } from '@ionic/angular';
+import { IMarker } from '../../../models/IMarker';
 
 @Component({
-    selector: 'app-tab2',
-    templateUrl: 'tab2.page.html',
-    styleUrls: ['tab2.page.scss'],
-    standalone: true,
-    imports: [IonicModule],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  selector: 'app-tab2',
+  templateUrl: 'tab2.page.html',
+  styleUrls: ['tab2.page.scss'],
+  standalone: true,
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, MarkerModalComponent, NgIf],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab2Page {
 
-  newMap: GoogleMap | undefined;
+  map: GoogleMap | undefined;
   mapRef = document.getElementById('map');
 
-  constructor(public markersService: MarkersService) {}
+  isMobile: boolean;
+
+  nearMarkers: IMarker[] = [];
+
+  constructor(
+    public markersService: MarkersService,
+    public platform: Platform,
+    private modalCtrl: ModalController) {
+
+    addIcons({
+      layersOutline
+    });
+
+    this.isMobile = this.platform.is('mobile');
+  }
 
   ionViewDidEnter() {
-    if(this.newMap === undefined){
+    if (this.map === undefined) {
       this.createMap();
     }
   }
@@ -32,8 +53,8 @@ export class Tab2Page {
     this.mapRef = document.getElementById('map');
 
     if (this.mapRef) {
-      this.newMap = await GoogleMap.create({
-        id: 'my-cool-map',
+      this.map = await GoogleMap.create({
+        id: 'map',
         element: this.mapRef,
         apiKey: environment.firebase.apiKey,
         config: {
@@ -42,31 +63,69 @@ export class Tab2Page {
             lng: coordinates.coords.longitude,
           },
           zoom: 17,
+          fullscreenControl: false
         },
       });
 
-      this.newMap.enableTouch();
-      this.newMap.enableCurrentLocation(true);
-      this.newMap.enableAccessibilityElements(true);
-      this.newMap.enableIndoorMaps(true);
-      this.newMap.enableTrafficLayer(false);
-      
-      this.newMap.addMarkers(await this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude));
+      this.map.enableTouch();
+      this.map.enableCurrentLocation(true);
+      this.map.enableTrafficLayer(false);
+
+      this.map.setOnMarkerClickListener(async (markerClickData) => {
+        this.map?.setCamera(
+        {
+          coordinate: {
+            lat: markerClickData.latitude,
+            lng: markerClickData.longitude
+          },
+          animate: true,
+          animationDuration: 500
+        });
+        
+        this.openModal(markerClickData);
+      });
+
+      this.nearMarkers = await this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude);
+      this.map.addMarkers(this.nearMarkers);
     }
   }
 
   async changeLayer() {
+    if (this.map) {
 
-    if(this.newMap){
-      
-      let mapType = await this.newMap.getMapType();
+      let mapType = await this.map.getMapType();
 
-      this.newMap.setMapType(
-        mapType === MapType.Normal ? 
-          MapType.Satellite : 
+      this.map.setMapType(
+        mapType === MapType.Normal ?
+          MapType.Satellite :
           MapType.Normal
       );
     }
   };
+
+  async openModal(markerClickData: MarkerClickCallbackData) {
+
+    let marker = this.nearMarkers.find(x => 
+      x.coordinate.lat === markerClickData.latitude &&
+      x.coordinate.lng === markerClickData.longitude &&
+      x.title === markerClickData.title);
+
+    const modal = await this.modalCtrl.create({
+      component: MarkerModalComponent,
+      cssClass: "modal",
+      componentProps: { marker },
+    });
+
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      console.log('con')
+    }
+    else {
+      console.log('exit')
+    }
+  }
 }
 

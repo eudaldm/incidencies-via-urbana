@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      {{marker.title}}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item lines= "full">
+    <ion-avatar>
+      <ion-img src={{marker.photoURL}} />
+    </ion-avatar>
+  </ion-item>
+  <ion-item lines= "full">
+    <ion-text>
+      {{marker.snippet}}
+    </ion-text>
+  </ion-item>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title class="ion-text-center" size="small"> 
+      lat {{marker.coordinate.lat}}  ,  lng {{marker.coordinate.lng}}
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>

@@ -3,14 +3,14 @@ import { MarkersService } from '../../../services/markers/markers.service';
 import { Geolocation } from '@capacitor/geolocation';
 import { Marker } from '@capacitor/google-maps';
 import { NgFor } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonAvatar, IonItem, IonLabel, IonList } from '@ionic/angular/standalone';
 
 @Component({
     selector: 'app-tab1',
     templateUrl: 'tab1.page.html',
     styleUrls: ['tab1.page.scss'],
     standalone: true,
-    imports: [IonicModule, NgFor]
+    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonImg, IonItem, IonAvatar, IonLabel, NgFor]
 })
 export class Tab1Page {
 

@@ -5,27 +5,24 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Identificació</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   @if (credentials !== undefined) {
     <div class="form">
       <form (ngSubmit)="login()" [formGroup]="credentials">
         <ion-card>
-          <ion-item class="email">
+          <ion-item lines= "none" class="email">
             <ion-input fill="solid" type="email" [clearInput]="true" placeholder="Correu-e" formControlName="email"></ion-input>
           </ion-item>
-          <ion-item class="password">
+          <ion-item lines= "none" class="password">
             <ion-input fill="solid" type="password" [clearInput]="true" placeholder="Contrassenya" formControlName="password"></ion-input>
           </ion-item>
+          <div class="buttons">
+            <ion-list>
+              <ion-button type="submit" expand="block">Accedir</ion-button>
+              <hr class="divider">
+              <ion-button type="button" expand="block" color="secondary" (click)="register()">Crear compte</ion-button>
+            </ion-list>
+          </div>
         </ion-card>
-        <div class="buttons">
-          <ion-button type="submit" expand="block">Accedir</ion-button>
-          <ion-button type="button" expand="block" color="secondary" (click)="register()">Crear compte</ion-button>
-        </div>
       </form>
     </div>
   }
