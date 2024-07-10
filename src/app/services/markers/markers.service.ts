@@ -13,8 +13,8 @@ export class MarkersService {
   constructor(private markersDataService: MarkersDataService) { }
 
   getNearMarkers(latitude: number, longitude: number): Promise<IMarker[]> {
-    return this.markersDataService.getNearMarkers(latitude, longitude);
-    //return this.getMockedMarkers(latitude, longitude);
+    //return this.markersDataService.getNearMarkers(latitude, longitude);
+    return this.getMockedMarkers(latitude, longitude);
   }
 
   private async getMockedMarkers(latitude: number, longitude: number) : Promise<IMarker[]>

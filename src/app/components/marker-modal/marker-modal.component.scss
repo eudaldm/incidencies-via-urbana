@@ -26,6 +26,50 @@
         margin-top: 10px;
         margin-bottom: 10px;
     }
+
+    ion-button {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    ion-button[shape=circle] {
+        --border-radius: 50%;
+        width: 70px;
+        height: 70px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+    }
+
+    ion-card-content.photoText {
+        align-items: center;
+        justify-items: center;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        text-align: center;
+    }
+
+    ion-toolbar.toolBarSave{
+        align-items: center;
+        justify-items: center;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+
+    ion-card-title.snippet {
+        font-size: 18px;
+        text-align: justify;
+        text-justify: inter-word;
+    }
+    
+    ion-textarea {
+        text-align: justify;
+        text-justify: inter-word;
+    }
 }
 
 
