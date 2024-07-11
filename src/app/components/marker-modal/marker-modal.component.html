@@ -8,7 +8,7 @@
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="deleteMarker()" *ngIf="marker !== undefined">
-        <ion-icon name="trash"  size="large"></ion-icon>
+        <ion-icon name="trash"></ion-icon>
       </ion-button>
       <ion-button (click)="close()">
         <ion-icon name="close" size="large"></ion-icon>
@@ -28,9 +28,7 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title class="snippet">
-        <ion-text>
           {{marker?.snippet}}
-        </ion-text>
       </ion-card-title>
     </ion-card-header>
   </ion-card>
@@ -62,7 +60,7 @@
         ngDefaultControl 
         placeholder="Resumeix la incidència"
         [counter]="true" 
-        [maxlength]="50" 
+        [maxlength]="30" 
         [counterFormatter]="customCounterFormatter" 
         [required]="true"
         [autoGrow]="true">
@@ -92,7 +90,7 @@
     <ion-buttons>
       <ion-button fill="outline" slot="center" (click)="saveMarker()">
         <ion-icon name="save-outline" size="large"></ion-icon>
-          Afegir incidència
+        &nbsp;Afegir incidència
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

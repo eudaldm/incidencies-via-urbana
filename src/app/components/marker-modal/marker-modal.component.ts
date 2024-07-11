@@ -26,7 +26,7 @@ export class MarkerModalComponent  implements OnInit {
   snippetTextArea: string = '';
   titleTextArea: string = '';
 
-  titleMinlength: number = 20;
+  titleMinlength: number = 10;
   descriptionMinLength: number = 50;
   photoURLMinLength: number = 15;
   
