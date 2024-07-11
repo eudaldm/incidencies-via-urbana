@@ -42,13 +42,31 @@ ion-toast.custom-toast {
   --color: red;
 }
 
+ion-toast.custom-toast-correct {
+  --background: white;
+  --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+  --color: rgb(4, 155, 24);
+}
+
 ion-toast.custom-toast::part(message) {
   font-style: italic;
   text-align: center;
   font-weight: bold;
 }
 
+ion-toast.custom-toast-correct::part(message) {
+  font-style: italic;
+  text-align: center;
+  font-weight: bold;
+}
+
 ion-toast.custom-toast::part(button) {
+  border-left: 1px solid #d2d2d2;
+  color: #030207;
+  font-size: 15px;
+}
+
+ion-toast.custom-toast-correct::part(button) {
   border-left: 1px solid #d2d2d2;
   color: #030207;
   font-size: 15px;

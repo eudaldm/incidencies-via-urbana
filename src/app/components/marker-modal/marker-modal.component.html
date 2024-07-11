@@ -7,6 +7,9 @@
       Nova incidència
     </ion-title>
     <ion-buttons slot="end">
+      <ion-button (click)="deleteMarker()" *ngIf="marker !== undefined">
+        <ion-icon name="trash"  size="large"></ion-icon>
+      </ion-button>
       <ion-button (click)="close()">
         <ion-icon name="close" size="large"></ion-icon>
       </ion-button>
@@ -54,12 +57,11 @@
       </ion-card-header>
       <ion-card-content>
         <ion-textarea 
-        [(ngModel)]="descriptionTextArea" 
+        [(ngModel)]="titleTextArea" 
         [ngModelOptions]="{standalone: true}"
         ngDefaultControl 
         placeholder="Resumeix la incidència"
         [counter]="true" 
-        [minlength]="20"
         [maxlength]="50" 
         [counterFormatter]="customCounterFormatter" 
         [required]="true"
@@ -78,7 +80,6 @@
       ngDefaultControl 
       placeholder="Descriu la incidència"
       [counter]="true" 
-      [minlength]="50"
       [maxlength]="250" 
       [counterFormatter]="customCounterFormatter" 
       [required]="true"
