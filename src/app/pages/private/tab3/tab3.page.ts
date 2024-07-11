@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ExploreContainerComponent } from '../../../explore-container/explore-container.component';
-import { IonicModule } from '@ionic/angular';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
     templateUrl: 'tab3.page.html',
     styleUrls: ['tab3.page.scss'],
     standalone: true,
-    imports: [IonicModule, ExploreContainerComponent]
+    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, ExploreContainerComponent]
 })
 export class Tab3Page {
 

@@ -1,15 +1,20 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Incidents map
+      Mapa d'incidències
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-fab slot="fixed" vertical="top" horizontal="start">
+  <ion-fab slot="fixed" vertical="top" horizontal="end" *ngIf="isMobile">
     <ion-fab-button  size="small" (click)="changeLayer()">
       <ion-icon name="layers-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="center" *ngIf="isMobile">
+    <ion-fab-button class="add" size="large" (click)="addMarker()">
+      <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   <capacitor-google-map id="map"></capacitor-google-map>

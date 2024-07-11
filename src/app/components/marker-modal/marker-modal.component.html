@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="marker !== undefined">
+      {{marker?.title}}
+    </ion-title>
+    <ion-title *ngIf="marker === undefined">
+      Nova incidència
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="marker !== undefined">
+  <ion-card>
+    <ion-card-content>
+      <ion-avatar>
+        <ion-img src={{marker?.photoURL}} />
+      </ion-avatar>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title class="snippet">
+        <ion-text>
+          {{marker?.snippet}}
+        </ion-text>
+      </ion-card-title>
+    </ion-card-header>
+  </ion-card>
+</ion-content>
+
+<ion-content [fullscreen]="true" *ngIf="marker === undefined">
+  <ion-card>
+    <ion-toolbar>
+      <ion-buttons>
+        <ion-button fill="outline" shape="circle" size="large" (click)="openCamera()">
+          <ion-icon name="camera-outline" size="large"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <ion-card-content class="photoText">
+      <ion-text text-center size="small">
+        Afegeix una fotografia
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+      <ion-card-header>
+        <ion-card-title>Títol de la inceidència</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea 
+        placeholder="Resumeix la incidència"
+        [counter]="true" 
+        [minlength]="20"
+        [maxlength]="50" 
+        [counterFormatter]="customCounterFormatter" 
+        [required]="true"
+        [autoGrow]="true">
+      </ion-textarea>
+      </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Descripció de la incidència</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-textarea 
+      placeholder="Descriu la incidència"
+      [counter]="true" 
+      [minlength]="50"
+      [maxlength]="250" 
+      [counterFormatter]="customCounterFormatter" 
+      [required]="true"
+      [autoGrow]="true">
+    </ion-textarea>
+    </ion-card-content>
+</ion-card>
+<ion-card>
+  <ion-toolbar class="toolBarSave">
+    <ion-buttons>
+      <ion-button fill="outline" slot="center" (click)="saveMarker()">
+        <ion-icon name="save-outline" size="large"></ion-icon>
+          Afegir incidència
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title class="ion-text-center" size="small" *ngIf="marker !== undefined">
+      lat {{marker?.coordinate?.lat}} , lng {{marker?.coordinate?.lng}}
+    </ion-title>
+    <ion-title class="ion-text-center" size="small" *ngIf="marker === undefined">
+      lat {{coordinates?.coords?.latitude}} , lng {{coordinates?.coords?.longitude}}
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>
