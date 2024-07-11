@@ -54,6 +54,9 @@
       </ion-card-header>
       <ion-card-content>
         <ion-textarea 
+        [(ngModel)]="descriptionTextArea" 
+        [ngModelOptions]="{standalone: true}"
+        ngDefaultControl 
         placeholder="Resumeix la incidència"
         [counter]="true" 
         [minlength]="20"
@@ -70,6 +73,9 @@
     </ion-card-header>
     <ion-card-content>
       <ion-textarea 
+      [(ngModel)]="snippetTextArea"
+      [ngModelOptions]="{standalone: true}"
+      ngDefaultControl 
       placeholder="Descriu la incidència"
       [counter]="true" 
       [minlength]="50"

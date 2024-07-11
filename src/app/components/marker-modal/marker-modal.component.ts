@@ -5,21 +5,23 @@ import { addIcons } from 'ionicons';
 import { cameraOutline, close, saveOutline } from 'ionicons/icons';
 import { NgIf } from '@angular/common';
 import { Geolocation, Position } from '@capacitor/geolocation';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-marker-modal',
   templateUrl: './marker-modal.component.html',
   styleUrls: ['./marker-modal.component.scss'],
   standalone: true,
-  imports: [IonTitle, IonModal, IonItem, IonContent, IonButton, IonButtons, IonToolbar, IonHeader, IonText, IonCard, IonCardContent, IonCardHeader,IonCardTitle, NgIf],
+  imports: [IonTitle, IonModal, IonItem, IonContent, IonButton, IonButtons, IonToolbar, IonHeader, IonText, IonCard, IonCardContent, IonCardHeader,IonCardTitle, NgIf, FormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
 export class MarkerModalComponent  implements OnInit {
-
   @Input() marker: IMarker | undefined;
 
   coordinates: Position | undefined;
+  snippetTextArea: string = '';
+  descriptionTextArea: string = '';
   
   constructor(private modalCtrl: ModalController) { 
     addIcons({
@@ -47,6 +49,10 @@ export class MarkerModalComponent  implements OnInit {
 
   }
 
-  saveMarker(){}
+  saveMarker()
+  {
+    console.log(this.snippetTextArea);
+    console.log(this.descriptionTextArea);
+  }
 
 }
