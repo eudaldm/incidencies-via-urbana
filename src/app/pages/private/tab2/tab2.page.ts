@@ -8,8 +8,7 @@ import { MarkerModalComponent } from '../../../components/marker-modal/marker-mo
 import { NgIf } from '@angular/common';
 import { MarkerClickCallbackData } from '@capacitor/google-maps/dist/typings/definitions';
 import { addIcons } from 'ionicons';
-import { layersOutline } from 'ionicons/icons';
-import { } from '@ionic/angular';
+import { add, layersOutline } from 'ionicons/icons';
 import { IMarker } from '../../../models/IMarker';
 
 @Component({
@@ -17,7 +16,7 @@ import { IMarker } from '../../../models/IMarker';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, MarkerModalComponent, NgIf],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, MarkerModalComponent, NgIf ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab2Page {
@@ -35,7 +34,8 @@ export class Tab2Page {
     private modalCtrl: ModalController) {
 
     addIcons({
-      layersOutline
+      layersOutline,
+      add
     });
 
     this.isMobile = this.platform.is('mobile');
@@ -82,7 +82,7 @@ export class Tab2Page {
           animationDuration: 500
         });
         
-        this.openModal(markerClickData);
+        this.openExistingMarkerModal(markerClickData);
       });
 
       this.nearMarkers = await this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude);
@@ -90,6 +90,31 @@ export class Tab2Page {
     }
   }
 
+  async openExistingMarkerModal(markerClickData: MarkerClickCallbackData) {
+
+    let marker = this.nearMarkers.find(x => 
+      x.coordinate.lat === markerClickData.latitude &&
+      x.coordinate.lng === markerClickData.longitude &&
+      x.title === markerClickData.title);
+
+    const modal = await this.modalCtrl.create({
+      component: MarkerModalComponent,
+      cssClass: "modal",
+      componentProps: { marker: marker },
+    });
+
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      console.log('con')
+    }
+    else {
+      console.log('exit')
+    }
+  }
+  
   async changeLayer() {
     if (this.map) {
 
@@ -101,19 +126,13 @@ export class Tab2Page {
           MapType.Normal
       );
     }
-  };
+  }
 
-  async openModal(markerClickData: MarkerClickCallbackData) {
-
-    let marker = this.nearMarkers.find(x => 
-      x.coordinate.lat === markerClickData.latitude &&
-      x.coordinate.lng === markerClickData.longitude &&
-      x.title === markerClickData.title);
-
+  async addMarker (){
     const modal = await this.modalCtrl.create({
       component: MarkerModalComponent,
       cssClass: "modal",
-      componentProps: { marker },
+      componentProps: { },
     });
 
     modal.present();

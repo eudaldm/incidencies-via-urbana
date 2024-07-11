@@ -37,25 +37,29 @@
 @import "@ionic/angular/css/palettes/dark.system.css";
 
 ion-toast.custom-toast {
-    --background: white;
-    --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
-    --color: red;
-  }
-  
-  ion-toast.custom-toast::part(message) {
-    font-style: italic;
-    text-align: center;
-    font-weight: bold;
-  }
-  
-  ion-toast.custom-toast::part(button) {
-    border-left: 1px solid #d2d2d2;
-    color: #030207;
-    font-size: 15px;
-  }
+  --background: white;
+  --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+  --color: red;
+}
 
-ion-modal.modal::part(content) {    
+ion-toast.custom-toast::part(message) {
+  font-style: italic;
+  text-align: center;
+  font-weight: bold;
+}
+
+ion-toast.custom-toast::part(button) {
+  border-left: 1px solid #d2d2d2;
+  color: #030207;
+  font-size: 15px;
+}
+
+
+
+@media only screen and (min-width: 768px) {
+  ion-modal.modal::part(content) {
     --height: 70%;
     --width: 60%;
     display: inline-block;
+  }
 }
