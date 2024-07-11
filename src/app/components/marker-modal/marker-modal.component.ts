@@ -6,7 +6,8 @@ import { cameraOutline, close, saveOutline, trash } from 'ionicons/icons';
 import { NgIf } from '@angular/common';
 import { Geolocation, Position } from '@capacitor/geolocation';
 import { FormsModule } from '@angular/forms';
-import { MarkersService } from 'src/app/services/markers/markers.service';
+import { MarkersService } from '../../services/markers/markers.service';
+import { ModalRoles } from '../../models/ModalRoles';
 
 
 @Component({
@@ -63,9 +64,6 @@ export class MarkerModalComponent  implements OnInit {
 
   async saveMarker(){
     try {
-      console.log(this.snippetTextArea);
-      console.log(this.titleTextArea); 
-
       this.coordinates = await Geolocation.getCurrentPosition();
 
       let marker : IMarker = {
@@ -82,7 +80,8 @@ export class MarkerModalComponent  implements OnInit {
 
       if(await this.validateNewMarkerValues(marker)){
         await this.markersService.addMarker(marker);
-        this.presentToast("S'ha afegit la incidència coreectament!", false);
+        this.presentToast("S'ha afegit la incidència correctament!", false);
+        this.modalCtrl.dismiss(marker, ModalRoles.Add);
       }
     } catch (error) {
       this.presentToast("No s'ha pogut afegir la incidència, torna-ho a intentar!");
@@ -135,9 +134,9 @@ export class MarkerModalComponent  implements OnInit {
           this.presentToast("No s'ha pogut esborrar la incidència");
         }
         else{
-          console.log(equalMarker);
           await this.markersService.deleteMarker(equalMarker);
           this.presentToast("Incidència esborrada!", false);
+          this.modalCtrl.dismiss(equalMarker, ModalRoles.Delete);
         }
     }
   }

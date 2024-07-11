@@ -10,6 +10,7 @@ import { MarkerClickCallbackData } from '@capacitor/google-maps/dist/typings/def
 import { addIcons } from 'ionicons';
 import { add, layersOutline } from 'ionicons/icons';
 import { IMarker } from '../../../models/IMarker';
+import { ModalRoles } from 'src/app/models/ModalRoles';
 
 @Component({
   selector: 'app-tab2',
@@ -85,9 +86,13 @@ export class Tab2Page {
         this.openExistingMarkerModal(markerClickData);
       });
 
-      this.nearMarkers = await this.markersService.getNearMarkers(coordinates.coords.latitude, coordinates.coords.longitude);
-      this.map.addMarkers(this.nearMarkers);
+      await this.loadNearMarkersToMap(coordinates.coords.latitude, coordinates.coords.longitude);
     }
+  }
+
+  async loadNearMarkersToMap(latitude: number, longitude: number){
+    this.nearMarkers = await this.markersService.getNearMarkers(latitude, longitude);
+    this.map?.addMarkers(this.nearMarkers);
   }
 
   async openExistingMarkerModal(markerClickData: MarkerClickCallbackData) {
@@ -107,11 +112,20 @@ export class Tab2Page {
 
     const { data, role } = await modal.onWillDismiss();
 
-    if (role === 'confirm') {
-      console.log('con')
-    }
-    else {
-      console.log('exit')
+    if (role === ModalRoles.Delete) {
+      let marker = data as IMarker;
+
+      if(marker.coordinate.lat === markerClickData.latitude &&
+        marker.coordinate.lng === markerClickData.longitude &&
+        marker.title === markerClickData.title) {
+        
+        let index = this.nearMarkers.map(m => m.id).indexOf(marker.id);
+
+        if(index > -1){
+         this.nearMarkers.splice(index, 1);
+         this.map?.removeMarker(markerClickData.markerId);
+        }
+      }
     }
   }
   
@@ -139,11 +153,10 @@ export class Tab2Page {
 
     const { data, role } = await modal.onWillDismiss();
 
-    if (role === 'confirm') {
-      console.log('con')
-    }
-    else {
-      console.log('exit')
+    if (role === ModalRoles.Add) {
+      let marker = data as IMarker;
+      this.nearMarkers.push(marker);
+      this.map?.addMarker(marker);
     }
   }
 }
