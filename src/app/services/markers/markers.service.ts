@@ -12,9 +12,16 @@ export class MarkersService {
 
   constructor(private markersDataService: MarkersDataService) { }
 
-  getNearMarkers(latitude: number, longitude: number): Promise<IMarker[]> {
-    //return this.markersDataService.getNearMarkers(latitude, longitude);
-    return this.getMockedMarkers(latitude, longitude);
+  public getNearMarkers(latitude: number, longitude: number): Promise<IMarker[]> {
+    return this.markersDataService.getNearMarkers(latitude, longitude);
+  }
+
+  public addMarker(marker: IMarker){
+      return this.markersDataService.addMarker(marker);
+  }
+
+  public deleteMarker(marker: IMarker){
+    return this.markersDataService.deleteMarker(marker);
   }
 
   private async getMockedMarkers(latitude: number, longitude: number) : Promise<IMarker[]>
@@ -37,5 +44,4 @@ export class MarkersService {
 
     return markers;
   }
-
 }
