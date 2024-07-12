@@ -13,6 +13,7 @@ export class AuthService {
   async register({ email, password }: {email: string; password: string}) {
     try {
       const user = await createUserWithEmailAndPassword(this.auth, email, password);
+      this.userEmail = user.user.email!;
       return user;
     } catch (e) {
       return (e as AuthError).code;
