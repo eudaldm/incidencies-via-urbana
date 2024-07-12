@@ -34,7 +34,7 @@ export class MarkersDataService extends FirestoreDataService {
       where("coordinate.lat", "<=", latitude + this.latLngDif),
       where("coordinate.lat", ">=", latitude - this.latLngDif),
       where("coordinate.lng", "<=", longitude + this.latLngDif),
-      where("coordinate.lng", ">=", longitude - this.latLngDif)
+      where("coordinate.lng", ">=", longitude - this.latLngDif),
     ));
 
     return this.getByQuery<IMarker>(filter);

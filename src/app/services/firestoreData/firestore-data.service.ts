@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collection, collectionData, doc, docData, addDoc, deleteDoc, updateDoc, getDocs, Query } from '@angular/fire/firestore';
+import { map } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
@@ -26,7 +27,8 @@ export class FirestoreDataService {
     const docs = await getDocs(query);
 
     docs.forEach(doc => {
-      result.push(doc.data() as type)
+      let item = {...doc.data() as type, id: doc.id};
+      result.push(item);
     });
 
     return result;
