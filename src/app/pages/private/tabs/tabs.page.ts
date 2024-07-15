@@ -18,7 +18,10 @@ export class TabsPage {
     addIcons({
       menuOutline, locationOutline, personOutline, layersOutline
     });
+    this.initializeOneSignal();
+  }
 
+  initializeOneSignal() {
     // Check if the app is running on a mobile device to turn on OneSignal push notifications
     if(this.platform.is('mobile')) {
       // Remove this method to stop OneSignal Debugging
@@ -37,8 +40,7 @@ export class TabsPage {
       });
 
       // Store the user's email as external_id to help us identify the subscription
-      OneSignal.login(authService.getCurrentUserEmail());
+      OneSignal.login(this.authService.getCurrentUserEmail());
     }
   }
-
 }

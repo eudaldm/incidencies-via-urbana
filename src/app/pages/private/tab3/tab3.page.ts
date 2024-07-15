@@ -23,6 +23,15 @@ export class Tab3Page implements OnInit {
   }
 
   ngOnInit(): void {
+    this.findPushSubscription();
+  }
+
+  togglePushNotifications() {
+    this.isPushNotificationsAllowed = !this.isPushNotificationsAllowed;
+    this.updatePushSubscription();    
+  }
+
+  findPushSubscription() {
     const options = {method: 'GET', headers: {accept: 'application/json'}};
 
     fetch('https://api.onesignal.com/apps/b0283ed4-860b-4c3b-adc2-69410c7a1c04/users/by/external_id/' + this.authService.getCurrentUserEmail(), options)
@@ -39,9 +48,7 @@ export class Tab3Page implements OnInit {
       .catch(err => console.error(err));
   }
 
-  togglePushNotifications() {
-    this.isPushNotificationsAllowed = !this.isPushNotificationsAllowed;
-
+  updatePushSubscription() {
     const options = {
       method: 'PATCH',
       headers: {accept: 'application/json', 'content-type': 'application/json'},
