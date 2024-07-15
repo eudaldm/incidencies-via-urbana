@@ -37,7 +37,7 @@ export class TabsPage {
       });
 
       // Store the user's email as external_id to help us identify the subscription
-      OneSignal.login(authService.getUserEmail());
+      OneSignal.login(authService.getCurrentUserEmail());
     }
   }
 
