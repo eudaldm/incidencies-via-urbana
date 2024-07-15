@@ -12,5 +12,13 @@
       <ion-title size="large">Perfil</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-button (click)="logout()">Desconnectar</ion-button>
+  <ion-card>
+    <ion-item>
+      <ion-label>{{ getCurrentUser()?.email  }}</ion-label>
+      <ion-button (click)="logout()">Desconnectar</ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-toggle (ionChange)="togglePushNotifications()" [enableOnOffLabels]="true" [checked]="isPushNotificationsAllowed">Permetre notificacions push</ion-toggle>
+    </ion-item>
+  </ion-card>
 </ion-content>
