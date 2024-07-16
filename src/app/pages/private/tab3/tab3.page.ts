@@ -34,18 +34,22 @@ export class Tab3Page implements OnInit {
   findPushSubscription() {
     const options = {method: 'GET', headers: {accept: 'application/json'}};
 
-    fetch('https://api.onesignal.com/apps/b0283ed4-860b-4c3b-adc2-69410c7a1c04/users/by/external_id/' + this.authService.getCurrentUserEmail(), options)
-      .then(response => response.json())
-      .then(response => {
-        response.subscriptions.forEach((subscription: { id: string; type: string; enabled: boolean; }) => {
-          // Update subscription type checking as devices are integrated into the app
-          if (subscription.type == "AndroidPush") {
-            this.SubscriptionId = subscription.id;
-            this.isPushNotificationsAllowed = subscription.enabled;
-          }
-        });
-      })
-      .catch(err => console.error(err));
+    try {
+      fetch('https://api.onesignal.com/apps/b0283ed4-860b-4c3b-adc2-69410c7a1c04/users/by/external_id/' + this.authService.getCurrentUserEmail(), options)
+        .then(response => response.json())
+        .then(response => {
+          response.subscriptions.forEach((subscription: { id: string; type: string; enabled: boolean; }) => {
+            // Update subscription type checking as devices are integrated into the app
+            if (subscription.type == "AndroidPush") {
+              this.SubscriptionId = subscription.id;
+              this.isPushNotificationsAllowed = subscription.enabled;
+            }
+          });
+        })
+        .catch(err => console.error(err));
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   updatePushSubscription() {
@@ -59,9 +63,13 @@ export class Tab3Page implements OnInit {
       })
     };
     
-    fetch('https://api.onesignal.com/apps/b0283ed4-860b-4c3b-adc2-69410c7a1c04/subscriptions/' + this.SubscriptionId, options)
-      .then(response => response.json())
-      .catch(err => console.error(err));
+    try {
+      fetch('https://api.onesignal.com/apps/b0283ed4-860b-4c3b-adc2-69410c7a1c04/subscriptions/' + this.SubscriptionId, options)
+        .then(response => response.json())
+        .catch(err => console.error(err));
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   logout() {
