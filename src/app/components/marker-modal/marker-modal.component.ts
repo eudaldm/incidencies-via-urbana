@@ -79,7 +79,9 @@ export class MarkerModalComponent  implements OnInit {
       }
 
       if(await this.validateNewMarkerValues(marker)){
-        await this.markersService.addMarker(marker);
+        let markerAdded = await this.markersService.addMarker(marker);
+        marker.id = markerAdded.id;
+
         this.presentToast("S'ha afegit la incidència correctament!", false);
         this.modalCtrl.dismiss(marker, ModalRoles.Add);
       }

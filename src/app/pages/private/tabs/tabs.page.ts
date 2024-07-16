@@ -22,7 +22,8 @@ export class TabsPage {
   }
 
   initializeOneSignal() {
-    // Check if the app is running on a mobile device to turn on OneSignal push notifications
+    try {
+          // Check if the app is running on a mobile device to turn on OneSignal push notifications
     if(this.platform.is('mobile')) {
       // Remove this method to stop OneSignal Debugging
       OneSignal.Debug.setLogLevel(6);
@@ -41,6 +42,9 @@ export class TabsPage {
 
       // Store the user's email as external_id to help us identify the subscription
       OneSignal.login(this.authService.getCurrentUserEmail());
+    }
+    } catch (error) {
+      console.log(error);
     }
   }
 }

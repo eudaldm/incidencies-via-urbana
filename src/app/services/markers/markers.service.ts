@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Marker } from '@capacitor/google-maps';
 import { MarkersDataService } from '../firestoreData/markers-data.service';
 import { IMarker } from 'src/app/models/IMarker';
 
