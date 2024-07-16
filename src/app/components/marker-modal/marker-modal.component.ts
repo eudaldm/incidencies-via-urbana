@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component, Input, OnInit } from '@angular/core';
-import { IonModal, IonTitle, IonItem, IonContent, IonButton, IonButtons, IonToolbar, IonHeader, ModalController, IonText, IonCard, IonCardContent, IonCardTitle, IonCardHeader, ToastController, AlertController } from '@ionic/angular/standalone';
+import { IonModal,IonTextarea, IonTitle, IonItem, IonContent, IonInput, IonButton, IonButtons, IonToolbar, IonHeader, ModalController, IonText, IonCard, IonCardContent, IonCardTitle, IonCardHeader, ToastController, AlertController } from '@ionic/angular/standalone';
 import { IMarker } from '../../models/IMarker';
 import { addIcons } from 'ionicons';
 import { cameraOutline, close, saveOutline, trash } from 'ionicons/icons';
@@ -15,7 +15,7 @@ import { ModalRoles } from '../../models/ModalRoles';
   templateUrl: './marker-modal.component.html',
   styleUrls: ['./marker-modal.component.scss'],
   standalone: true,
-  imports: [IonTitle, IonModal, IonItem, IonContent, IonButton, IonButtons, IonToolbar, IonHeader, IonText, IonCard, IonCardContent, IonCardHeader,IonCardTitle, NgIf, FormsModule],
+  imports: [IonTitle, IonModal, IonItem, IonContent, IonButton, IonButtons, IonToolbar, IonHeader, IonText, IonCard, IonCardContent, IonCardHeader,IonCardTitle, NgIf, FormsModule, IonInput, IonTextarea],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 

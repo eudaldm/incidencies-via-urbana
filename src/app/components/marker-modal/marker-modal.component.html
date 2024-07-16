@@ -54,17 +54,17 @@
         <ion-card-title>Títol de la incidència</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-textarea 
-        [(ngModel)]="titleTextArea" 
-        [ngModelOptions]="{standalone: true}"
-        ngDefaultControl 
-        placeholder="Resumeix la incidència"
-        [counter]="true" 
-        [maxlength]="30" 
-        [counterFormatter]="customCounterFormatter" 
-        [required]="true"
-        [autoGrow]="true">
-      </ion-textarea>
+          <ion-input 
+          [(ngModel)]="titleTextArea" 
+          [ngModelOptions]="{standalone: true}"
+          ngDefaultControl 
+          placeholder="Resumeix la incidència"
+          [counter]="true" 
+          [maxlength]="30" 
+          [counterFormatter]="customCounterFormatter" 
+          [required]="true"
+          [autoGrow]="true">
+        </ion-input>
       </ion-card-content>
   </ion-card>
   <ion-card>
