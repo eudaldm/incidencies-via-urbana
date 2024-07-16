@@ -57,6 +57,7 @@
       </ion-card-header>
       <ion-card-content>
           <ion-textarea 
+          class="customValidator_primary"
           [(ngModel)]="titleTextArea" 
           [ngModelOptions]="{standalone: true}"
           ngDefaultControl 
@@ -75,7 +76,8 @@
       <ion-card-title>Descripció de la incidència</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-textarea 
+      <ion-textarea
+      class="customValidator_primary"
       [(ngModel)]="snippetTextArea"
       [ngModelOptions]="{standalone: true}"
       ngDefaultControl 
