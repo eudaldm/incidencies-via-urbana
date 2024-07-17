@@ -7,7 +7,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
+  <ion-title class="ion-text-center" *ngIf="markers.length === 0">
+    No hi ha incidències properes!
+  </ion-title>
+  <ion-list *ngIf="markers.length > 0">
     <ion-item lines= "full" *ngFor=" let marker of markers">
       <ion-avatar slot="start">
         <ion-img src="https://s2.ppllstatics.com/elcomercio/www/multimedia/202301/21/media/cortadas/80120341--1248x968.jpg" />

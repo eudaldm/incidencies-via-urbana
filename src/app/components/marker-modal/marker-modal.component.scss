@@ -87,3 +87,8 @@ ion-text {
     text-align: justify;
     text-justify: inter-word;
 }
+
+ion-textarea.customValidator_primary {
+    --highlight-color-valid: var(--ion-color-primary);
+    --highlight-color-invalid:var(--ion-color-primary);
+}
