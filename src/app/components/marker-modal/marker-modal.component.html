@@ -1,15 +1,14 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title *ngIf="marker !== undefined">
-      {{marker?.title}}
-    </ion-title>
     <ion-title *ngIf="marker === undefined">
       Nova incidència
     </ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="start">
       <ion-button (click)="deleteMarker()" *ngIf="marker !== undefined">
         <ion-icon name="trash"></ion-icon>
       </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
       <ion-button (click)="close()">
         <ion-icon name="close" size="large"></ion-icon>
       </ion-button>
@@ -27,10 +26,13 @@
   </ion-card>
   <ion-card>
     <ion-card-header>
-      <ion-card-title class="snippet">
-          {{marker?.snippet}}
+      <ion-card-title>
+        {{marker?.title}}
       </ion-card-title>
     </ion-card-header>
+    <ion-card-content>
+        {{marker?.snippet}}
+    </ion-card-content>
   </ion-card>
 </ion-content>
 
@@ -51,20 +53,22 @@
   </ion-card>
   <ion-card>
       <ion-card-header>
-        <ion-card-title>Títol de la inceidència</ion-card-title>
+        <ion-card-title>Títol de la incidència</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-textarea 
-        [(ngModel)]="titleTextArea" 
-        [ngModelOptions]="{standalone: true}"
-        ngDefaultControl 
-        placeholder="Resumeix la incidència"
-        [counter]="true" 
-        [maxlength]="30" 
-        [counterFormatter]="customCounterFormatter" 
-        [required]="true"
-        [autoGrow]="true">
-      </ion-textarea>
+          <ion-textarea 
+          class="customValidator_primary"
+          [(ngModel)]="titleTextArea" 
+          [ngModelOptions]="{standalone: true}"
+          ngDefaultControl 
+          placeholder="Resumeix la incidència"
+          [counter]="true" 
+          [minlength]={titleMinlength}.toString()
+          [maxlength]="30" 
+          [counterFormatter]="customCounterFormatter" 
+          [required]="true"
+          [autoGrow]="true">
+          </ion-textarea>
       </ion-card-content>
   </ion-card>
   <ion-card>
@@ -72,12 +76,14 @@
       <ion-card-title>Descripció de la incidència</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-textarea 
+      <ion-textarea
+      class="customValidator_primary"
       [(ngModel)]="snippetTextArea"
       [ngModelOptions]="{standalone: true}"
       ngDefaultControl 
       placeholder="Descriu la incidència"
       [counter]="true" 
+      [minlength]={descriptionMinLength}.toString()
       [maxlength]="250" 
       [counterFormatter]="customCounterFormatter" 
       [required]="true"
