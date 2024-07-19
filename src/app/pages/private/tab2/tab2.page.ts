@@ -43,7 +43,13 @@ export class Tab2Page {
   }
 
   async ionViewDidEnter() {
-    this.createMap();
+    if (this.map === undefined) {
+      this.createMap();
+    }
+    else {
+      this.map.destroy();
+      this.createMap();
+    }
   }
 
   async createMap() {
