@@ -89,6 +89,10 @@ export class Tab2Page {
   }
 
   async loadNearMarkersToMap(latitude: number, longitude: number){
+    if (this.nearMarkers.length > 0){
+      this.map?.removeMarkers([ ...Array(this.nearMarkers.length).keys() ].map( i => i.toString()));
+    }
+
     this.nearMarkers = await this.markersService.getNearMarkers(latitude, longitude);
     this.map?.addMarkers(this.nearMarkers);
   }
