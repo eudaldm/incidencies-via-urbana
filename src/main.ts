@@ -9,6 +9,10 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { routes } from './app/app.routes';
+import { getStorage, provideStorage } from '@angular/fire/storage';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+
+defineCustomElements(window);
 
 if (environment.production) {
   enableProdMode();
@@ -21,5 +25,6 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())],
+    provideFirestore(() => getFirestore()),
+  	provideStorage(() => getStorage())],
 });

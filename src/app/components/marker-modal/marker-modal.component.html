@@ -4,7 +4,7 @@
       Nova incidència
     </ion-title>
     <ion-buttons slot="start">
-      <ion-button (click)="deleteMarker()" *ngIf="marker !== undefined">
+      <ion-button (click)="deleteMarker()" *ngIf="allowDelete">
         <ion-icon name="trash"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -37,7 +37,7 @@
 </ion-content>
 
 <ion-content [fullscreen]="true" *ngIf="marker === undefined">
-  <ion-card>
+  <ion-card *ngIf="photo === undefined">
     <ion-toolbar>
       <ion-buttons>
         <ion-button fill="outline" shape="circle" size="large" (click)="openCamera()">
@@ -49,6 +49,13 @@
       <ion-text text-center size="small">
         Afegeix una fotografia
       </ion-text>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="photo !== undefined">
+    <ion-card-content>
+      <ion-avatar>
+        <ion-img src={{photo.dataUrl}} />
+      </ion-avatar>
     </ion-card-content>
   </ion-card>
   <ion-card>

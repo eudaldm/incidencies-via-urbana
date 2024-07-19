@@ -42,9 +42,13 @@ export class Tab2Page {
     this.isMobile = this.platform.is('mobile');
   }
 
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
     if (this.map === undefined) {
       this.createMap();
+    }
+    else {
+      let coordinates = await Geolocation.getCurrentPosition();
+      await this.loadNearMarkersToMap(coordinates.coords.latitude, coordinates.coords.longitude);
     }
   }
 
@@ -91,6 +95,10 @@ export class Tab2Page {
   }
 
   async loadNearMarkersToMap(latitude: number, longitude: number){
+    if (this.nearMarkers.length > 0){
+      this.map?.removeMarkers([ ...Array(this.nearMarkers.length).keys() ].map( i => i.toString()));
+    }
+
     this.nearMarkers = await this.markersService.getNearMarkers(latitude, longitude);
     this.map?.addMarkers(this.nearMarkers);
   }
@@ -120,10 +128,6 @@ export class Tab2Page {
         marker.title === markerClickData.title) {
         
         let index = this.nearMarkers.map(m => m.id).indexOf(marker.id);
-        console.log(this.nearMarkers);
-        console.log('meu ' + marker.id)
-        console.log('cb data '+ markerClickData.markerId);
-        console.log(index);
         if(index > -1){
          this.nearMarkers.splice(index, 1);
          this.map?.removeMarker(markerClickData.markerId);
@@ -160,10 +164,6 @@ export class Tab2Page {
       let marker = data as IMarker;
       this.nearMarkers.push(marker);
       this.map?.addMarker(marker);
-      /////
-      /////////////
-      /////////////
-      console.log(marker);
     }
   }
 }
