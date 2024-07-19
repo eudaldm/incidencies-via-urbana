@@ -11,9 +11,9 @@
     No hi ha incidències properes!
   </ion-title>
   <ion-list *ngIf="markers.length > 0">
-    <ion-item lines= "full" *ngFor=" let marker of markers">
+    <ion-item lines= "full" *ngFor=" let marker of markers" (click)="openExistingMarkerModal(marker)">
       <ion-avatar slot="start">
-        <ion-img src="https://s2.ppllstatics.com/elcomercio/www/multimedia/202301/21/media/cortadas/80120341--1248x968.jpg" />
+        <ion-img src={{marker.photoURL}} />
       </ion-avatar>
       <ion-label>
         <h2>{{marker.title}}</h2>

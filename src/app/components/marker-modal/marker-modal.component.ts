@@ -8,6 +8,9 @@ import { Geolocation, Position } from '@capacitor/geolocation';
 import { FormsModule } from '@angular/forms';
 import { MarkersService } from '../../services/markers/markers.service';
 import { ModalRoles } from '../../models/ModalRoles';
+import { Photo } from '@capacitor/camera';
+import { PhotosService } from '../../services/photos/photos.service';
+import { Auth } from '@angular/fire/auth';
 
 
 @Component({
@@ -25,6 +28,8 @@ export class MarkerModalComponent  implements OnInit {
   coordinates: Position | undefined;
   snippetTextArea: string = '';
   titleTextArea: string = '';
+  photo: Photo | undefined;
+  allowDelete: boolean = false;
 
   titleMinlength: number = 10;
   descriptionMinLength: number = 50;
@@ -34,8 +39,9 @@ export class MarkerModalComponent  implements OnInit {
     private modalCtrl: ModalController,
     private toastController: ToastController,
     private markersService: MarkersService,
-    private alertController: AlertController
-  ) { 
+    private alertController: AlertController,
+    private photoService: PhotosService,
+    private auth: Auth) { 
     addIcons({
       close,
       cameraOutline,
@@ -48,6 +54,9 @@ export class MarkerModalComponent  implements OnInit {
     if (this.marker === undefined){
       this.coordinates = await Geolocation.getCurrentPosition();
     }
+    else {
+      this.allowDelete = this.marker.userId === this.auth.currentUser?.uid;
+    }
   }
 
   close(){
@@ -58,8 +67,8 @@ export class MarkerModalComponent  implements OnInit {
     return `${maxLength - inputLength} caràcters restants`;
   }
 
-  openCamera(){
-
+  async openCamera(){
+    this.photo =  await this.photoService.takePhoto();    
   }
 
   async saveMarker(){
@@ -68,8 +77,8 @@ export class MarkerModalComponent  implements OnInit {
 
       let marker : IMarker = {
         id: '',
-        userId: 'userTest',
-        photoURL: 'https://s2.ppllstatics.com/elcomercio/www/multimedia/202301/21/media/cortadas/80120341--1248x968.jpg',
+        userId: this.auth.currentUser!.uid,
+        photoURL: '',
         title: this.titleTextArea,
         snippet: this.snippetTextArea,
         coordinate: {
@@ -77,6 +86,8 @@ export class MarkerModalComponent  implements OnInit {
           lng: this.coordinates.coords.longitude,
         }
       }
+
+      marker.photoURL = await this.photoService.uploadPhoto(this.photo!) || '';
 
       if(await this.validateNewMarkerValues(marker)){
         let markerAdded = await this.markersService.addMarker(marker);
@@ -105,7 +116,7 @@ export class MarkerModalComponent  implements OnInit {
 
     if (marker.photoURL?.length === undefined ||
       marker.photoURL?.length < this.photoURLMinLength){
-      this.presentToast("La descripció ha de tenir al menys 50 caràcters");
+      this.presentToast("La imatge no s'ha pujat correctament");
       return false;
     }
 
@@ -137,6 +148,7 @@ export class MarkerModalComponent  implements OnInit {
         }
         else{
           await this.markersService.deleteMarker(equalMarker);
+          await this.photoService.deletePhoto(equalMarker.photoURL);
           this.presentToast("Incidència esborrada!", false);
           this.modalCtrl.dismiss(equalMarker, ModalRoles.Delete);
         }
