@@ -11,6 +11,7 @@ import { addIcons } from 'ionicons';
 import { add, layersOutline } from 'ionicons/icons';
 import { IMarker } from '../../../models/IMarker';
 import { ModalRoles } from 'src/app/models/ModalRoles';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-tab2',
@@ -50,6 +51,7 @@ export class Tab2Page {
       this.map.destroy();
       this.createMap();
     }
+    SplashScreen.hide();
   }
 
   async createMap() {
