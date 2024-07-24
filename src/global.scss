@@ -72,7 +72,21 @@ ion-toast.custom-toast-correct::part(button) {
   font-size: 15px;
 }
 
+body {
+  background: transparent;
+}
 
+@media (prefers-color-scheme: dark) {
+  ion-content {
+    --background: black;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  ion-content {
+    --background: white;
+  }
+}
 
 @media only screen and (min-width: 768px) {
   ion-modal.modal::part(content) {
