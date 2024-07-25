@@ -3,13 +3,13 @@
   "index": "/index.html",
   "assetGroups": [
     {
-      "name": "app",
+      "name": "Incidencies urbanes",
       "installMode": "prefetch",
       "resources": {
         "files": [
           "/favicon.ico",
           "/index.html",
-          "/manifest.webmanifest",
+          "/assets/manifest.webmanifest",
           "/*.css",
           "/*.js"
         ]
