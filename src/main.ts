@@ -1,4 +1,4 @@
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, isDevMode } from '@angular/core';
 import { environment } from './environments/environment';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
@@ -11,6 +11,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { routes } from './app/app.routes';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import { provideServiceWorker } from '@angular/service-worker';
 
 defineCustomElements(window);
 
@@ -26,5 +27,8 @@ bootstrapApplication(AppComponent, {
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-  	provideStorage(() => getStorage())],
+  	provideStorage(() => getStorage()), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          })],
 });
