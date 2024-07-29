@@ -1,0 +1,21 @@
+capacitor-google-map {
+    display: inline-block;
+    width: 100%;
+    height: 99.5%;
+  }
+
+  ion-content {
+    --background: none;
+  }
+
+  ion-fab-button.add {
+    margin-bottom: 10px;
+  }
+
+  ion-fab-button.layers {
+    margin-top: -1px;
+  }
+  
+  body {
+    background: transparent;
+  }

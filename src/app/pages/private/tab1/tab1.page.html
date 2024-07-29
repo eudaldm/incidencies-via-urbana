@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Incidències properes
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-title class="ion-text-center" *ngIf="markers.length === 0">
+    No hi ha incidències properes!
+  </ion-title>
+  <ion-list *ngIf="markers.length > 0">
+    <ion-item lines= "full" *ngFor=" let marker of markers" (click)="openExistingMarkerModal(marker)">
+      <ion-avatar slot="start">
+        <ion-img src={{marker.photoURL}} />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{marker.title}}</h2>
+        <h3>{{marker.snippet}}</h3>
+        <p>Coordinates {{marker.coordinate.lat}} {{marker.coordinate.lng}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

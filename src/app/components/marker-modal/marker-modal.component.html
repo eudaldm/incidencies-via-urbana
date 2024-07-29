@@ -1,0 +1,122 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="marker === undefined">
+      Nova incidència
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="deleteMarker()" *ngIf="allowDelete">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="marker !== undefined">
+  <ion-card>
+    <ion-card-content>
+      <ion-avatar>
+        <ion-img src={{marker?.photoURL}} />
+      </ion-avatar>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        {{marker?.title}}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+        {{marker?.snippet}}
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-content [fullscreen]="true" *ngIf="marker === undefined">
+  <ion-card *ngIf="photo === undefined">
+    <ion-toolbar>
+      <ion-buttons>
+        <ion-button fill="outline" shape="circle" size="large" (click)="openCamera()">
+          <ion-icon name="camera-outline" size="large"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <ion-card-content class="photoText">
+      <ion-text text-center size="small">
+        Afegeix una fotografia
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="photo !== undefined">
+    <ion-card-content>
+      <ion-avatar>
+        <ion-img src={{photo.dataUrl}} />
+      </ion-avatar>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+      <ion-card-header>
+        <ion-card-title>Títol de la incidència</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+          <ion-textarea 
+          class="customValidator_primary"
+          [(ngModel)]="titleTextArea" 
+          [ngModelOptions]="{standalone: true}"
+          ngDefaultControl 
+          placeholder="Resumeix la incidència"
+          [counter]="true" 
+          [minlength]={titleMinlength}.toString()
+          [maxlength]="30" 
+          [counterFormatter]="customCounterFormatter" 
+          [required]="true"
+          [autoGrow]="true">
+          </ion-textarea>
+      </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Descripció de la incidència</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-textarea
+      class="customValidator_primary"
+      [(ngModel)]="snippetTextArea"
+      [ngModelOptions]="{standalone: true}"
+      ngDefaultControl 
+      placeholder="Descriu la incidència"
+      [counter]="true" 
+      [minlength]={descriptionMinLength}.toString()
+      [maxlength]="250" 
+      [counterFormatter]="customCounterFormatter" 
+      [required]="true"
+      [autoGrow]="true">
+    </ion-textarea>
+    </ion-card-content>
+</ion-card>
+<ion-card>
+  <ion-toolbar class="toolBarSave">
+    <ion-buttons>
+      <ion-button fill="outline" slot="center" (click)="saveMarker()">
+        <ion-icon name="save-outline" size="large"></ion-icon>
+        &nbsp;Afegir incidència
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title class="ion-text-center" size="small" *ngIf="marker !== undefined">
+      lat {{marker?.coordinate?.lat}} , lng {{marker?.coordinate?.lng}}
+    </ion-title>
+    <ion-title class="ion-text-center" size="small" *ngIf="marker === undefined">
+      lat {{coordinates?.coords?.latitude}} , lng {{coordinates?.coords?.longitude}}
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,94 @@
+@media only screen and (min-width: 768px) {
+    ion-avatar {
+        --border-radius: 4px;
+        height: fit-content;
+        width: fit-content;
+        min-height: 20%;
+        min-width: 20%;
+        max-width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    ion-avatar {
+        --border-radius: 4px;
+        height: fit-content;
+        width: fit-content;
+        min-height: 20%;
+        min-width: 20%;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    ion-button {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    ion-button[shape=circle] {
+        --border-radius: 50%;
+        width: 70px;
+        height: 70px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+    }
+
+    ion-card-content.photoText {
+        align-items: center;
+        justify-items: center;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        text-align: center;
+    }
+
+    ion-toolbar.toolBarSave{
+        align-items: center;
+        justify-items: center;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+
+    ion-card-title.snippet {
+        font-size: 18px;
+        text-align: justify;
+        text-justify: inter-word;
+    }
+    
+    ion-textarea {
+        text-align: justify;
+        text-justify: inter-word;
+    }
+}
+
+
+
+ion-title.title-small {
+    font-size: 15px;
+    opacity: 0.5;
+}
+
+ion-text {
+    margin-left: 8px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+ion-textarea.customValidator_primary {
+    --highlight-color-valid: var(--ion-color-primary);
+    --highlight-color-invalid:var(--ion-color-primary);
+}
